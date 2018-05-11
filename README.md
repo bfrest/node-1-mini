@@ -68,7 +68,7 @@ In this step, we will create our server and have it listen on port `3000`.
 * Create an `index.js` file in `server/`.
 * Open `server/index.js`.
 * Require `express` in a variable called `express` and require `body-parser` in a variable called `bodyParser`.
-* Create a variable called `app` that equals `express` invoked. 
+* Create a variable called `app` that equals `express` invoked.
 * Call the `use` method on app and pass in `bodyParser`'s `json` method invoked.
 * Call the `listen` method on app. The app should listen on port 3000:
   * The first parameter of `listen` is the port number.
@@ -81,15 +81,17 @@ In this step, we will create our server and have it listen on port `3000`.
 <summary> <code> server/index.js </code> </summary>
 
 ```js
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
 const port = 3000;
-app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 ```
 
 </details>
@@ -98,7 +100,7 @@ app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 
 ### Summary
 
-In this step, we will create a controller that keeps track of the book collection and import that controller into `server/index.js`. 
+In this step, we will create a controller that keeps track of the book collection and import that controller into `server/index.js`.
 
 ### Instructions
 
@@ -122,18 +124,18 @@ In this step, we will create a controller that keeps track of the book collectio
 let books = [];
 let id = 0;
 
-module.exports = {
-
-};
+module.exports = {};
 ```
+
 </details>
 
 <details>
 <summary><code> server/index.js </code></summary>
 
 ```js
-const bc = require('./controllers/books_controller.js');
+const bc = require("./controllers/books_controller.js");
 ```
+
 </details>
 
 ## Step 6
@@ -166,11 +168,12 @@ let books = [];
 let id = 0;
 
 module.exports = {
-  read: ( req, res ) => {
-    res.status(200).send( books );
+  read: (req, res) => {
+    res.status(200).send(books);
   }
 };
 ```
+
 </details>
 
 <details>
@@ -178,21 +181,23 @@ module.exports = {
 <summary> <code> server/index.js </code> </summary>
 
 ```js
-const express = require('express');
-const bodyParser = require('body-parser');
-const bc = require('./controllers/books_controller.js');
+const express = require("express");
+const bodyParser = require("body-parser");
+const bc = require("./controllers/books_controller.js");
 
 const app = express();
 
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
-app.get('/api/books', bc.read);
+app.get("/api/books", bc.read);
 
 const port = 3000;
-app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 ```
-</details>
 
+</details>
 
 ## Step 7
 
@@ -224,22 +229,23 @@ let books = [];
 let id = 0;
 
 module.exports = {
-  read: ( req, res ) => {
-    res.status(200).send( books );
+  read: (req, res) => {
+    res.status(200).send(books);
   },
-  create: ( req, res ) => {
+  create: (req, res) => {
     const { title, author } = req.body;
     let book = {
       id: id,
       title: title,
       author: author
-    }
-    books.push( book );
+    };
+    books.push(book);
     id++;
-    res.status(200).send( books );
+    res.status(200).send(books);
   }
 };
 ```
+
 </details>
 
 <details>
@@ -247,22 +253,24 @@ module.exports = {
 <summary> <code> server/index.js </code> </summary>
 
 ```js
-const express = require('express');
-const bodyParser = require('body-parser');
-const bc = require('./controllers/books_controller.js');
+const express = require("express");
+const bodyParser = require("body-parser");
+const bc = require("./controllers/books_controller.js");
 
 const app = express();
 
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
-app.get('/api/books', bc.read);
-app.post('/api/books', bc.create);
+app.get("/api/books", bc.read);
+app.post("/api/books", bc.create);
 
 const port = 3000;
-app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 ```
-</details>
 
+</details>
 
 ## Step 8
 
@@ -294,34 +302,35 @@ let books = [];
 let id = 0;
 
 module.exports = {
-  read: ( req, res ) => {
-    res.status(200).send( books );
+  read: (req, res) => {
+    res.status(200).send(books);
   },
-  create: ( req, res ) => {
+  create: (req, res) => {
     const { title, author } = req.body;
     let book = {
       id: id,
       title: title,
       author: author
-    }
-    books.push( book );
+    };
+    books.push(book);
     id++;
-    res.status(200).send( books );
+    res.status(200).send(books);
   },
-  update: ( req, res ) => {
+  update: (req, res) => {
     let index = null;
     books.forEach((book, i) => {
-      if(book.id === Number(req.params.id)) index = i;
-    })
-    books[ index ] = {
-      id: books[ index ].id,
-      title: req.body.title || books[ index ].title,
-      author: req.body.author || books[ index ].author
+      if (book.id === Number(req.params.id)) index = i;
+    });
+    books[index] = {
+      id: books[index].id,
+      title: req.body.title || books[index].title,
+      author: req.body.author || books[index].author
     };
-    res.status(200).send( books );
+    res.status(200).send(books);
   }
 };
 ```
+
 </details>
 
 <details>
@@ -329,23 +338,25 @@ module.exports = {
 <summary> <code> server/index.js </code> </summary>
 
 ```js
-const express = require('express');
-const bodyParser = require('body-parser');
-const bc = require('./controllers/books_controller.js');
+const express = require("express");
+const bodyParser = require("body-parser");
+const bc = require("./controllers/books_controller.js");
 
 const app = express();
 
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
-app.get('/api/books', bc.read);
-app.post('/api/books', bc.create);
-app.put('/api/books/:id', bc.update);
+app.get("/api/books", bc.read);
+app.post("/api/books", bc.create);
+app.put("/api/books/:id", bc.update);
 
 const port = 3000;
-app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 ```
-</details>
 
+</details>
 
 ## Step 9
 
@@ -377,42 +388,43 @@ let books = [];
 let id = 0;
 
 module.exports = {
-  read: ( req, res ) => {
-    res.status(200).send( books );
+  read: (req, res) => {
+    res.status(200).send(books);
   },
-  create: ( req, res ) => {
+  create: (req, res) => {
     const { title, author } = req.body;
     let book = {
       id: id,
       title: title,
       author: author
-    }
-    books.push( book );
-    id++;
-    res.status(200).send( books );
-  },
-  update: ( req, res ) => {
-    let index = null;
-    books.forEach((book, i) => {
-      if(book.id === Number(req.params.id)) index = i;
-    })
-    books[ index ] = {
-      id: books[ index ].id,
-      title: req.body.title || books[ index ].title,
-      author: req.body.author || books[ index ].author
     };
-    res.status(200).send( books );
+    books.push(book);
+    id++;
+    res.status(200).send(books);
   },
-  delete: ( req, res ) => {
+  update: (req, res) => {
     let index = null;
     books.forEach((book, i) => {
-      if(book.id === Number(req.params.id)) index = i;
-    })
-    books.splice(index, 1)
-    res.status(200).send( books );
+      if (book.id === Number(req.params.id)) index = i;
+    });
+    books[index] = {
+      id: books[index].id,
+      title: req.body.title || books[index].title,
+      author: req.body.author || books[index].author
+    };
+    res.status(200).send(books);
+  },
+  delete: (req, res) => {
+    let index = null;
+    books.forEach((book, i) => {
+      if (book.id === Number(req.params.id)) index = i;
+    });
+    books.splice(index, 1);
+    res.status(200).send(books);
   }
 };
 ```
+
 </details>
 
 <details>
@@ -420,24 +432,26 @@ module.exports = {
 <summary> <code> server/index.js </code> </summary>
 
 ```js
-const express = require('express');
-const bodyParser = require('body-parser');
-const bc = require('./controllers/books_controller.js');
+const express = require("express");
+const bodyParser = require("body-parser");
+const bc = require("./controllers/books_controller.js");
 
 const app = express();
 
-app.use( bodyParser.json() );
+app.use(bodyParser.json());
 
-app.get('/api/books', bc.read);
-app.post('/api/books', bc.create);
-app.put('/api/books/:id', bc.update);
-app.delete('/api/books/:id', bc.delete)
+app.get("/api/books", bc.read);
+app.post("/api/books", bc.create);
+app.put("/api/books/:id", bc.update);
+app.delete("/api/books/:id", bc.delete);
 
 const port = 3000;
-app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 ```
-</details>
 
+</details>
 
 ## Step 10
 
@@ -463,7 +477,7 @@ In this step, we will use Postman Unit Tests to test our endpoints.
 
 ### Summary
 
-In this step, we will use `express.static` to serve up our `index.html` file. `express.static` takes an argument that is the location of the folder with the files you want to serve when the server URL is hit in a browser. Our front-end was made using `create-react-app` and instead of running it's own server, we have made a production ready build so that our server can serve up our frontend. We'll want to serve the entire `build` folder. 
+In this step, we will use `express.static` to serve up our `index.html` file. `express.static` takes an argument that is the location of the folder with the files you want to serve when the server URL is hit in a browser. Our front-end was made using `create-react-app` and instead of running it's own server, we have made a production ready build so that our server can serve up our frontend. We'll want to serve the entire `build` folder.
 
 ### Instructions
 
@@ -478,22 +492,24 @@ In this step, we will use `express.static` to serve up our `index.html` file. `e
 <summary> <code> server/index.js </code> </summary>
 
 ```js
-const express = require('express');
-const bodyParser = require('body-parser');
-const bc = require('./controllers/books_controller.js');
+const express = require("express");
+const bodyParser = require("body-parser");
+const bc = require("./controllers/books_controller.js");
 
 const app = express();
 
-app.use( bodyParser.json() );
-app.use( express.static( __dirname + "/../build") );
+app.use(bodyParser.json());
+app.use(express.static(__dirname + "/../build"));
 
-app.get('/api/books', bc.read);
-app.post('/api/books', bc.create);
-app.put('/api/books/:id', bc.update);
-app.delete('/api/books/:id', bc.delete)
+app.get("/api/books", bc.read);
+app.post("/api/books", bc.create);
+app.put("/api/books/:id", bc.update);
+app.delete("/api/books/:id", bc.delete);
 
 const port = 3000;
-app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 ```
 
 </details>
